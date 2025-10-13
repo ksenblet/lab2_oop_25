@@ -1,0 +1,2 @@
+C:\Users\kseni\gcc\bin\ar.exe qc libbitstring_lib.a CMakeFiles/bitstring_lib.dir/src/BitString.cpp.obj CMakeFiles/bitstring_lib.dir/src/Array.cpp.obj
+C:\Users\kseni\gcc\bin\ranlib.exe libbitstring_lib.a
