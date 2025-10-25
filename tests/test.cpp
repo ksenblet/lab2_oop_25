@@ -1,7 +1,8 @@
 #include <gtest/gtest.h>
+#include <stdexcept>
+
 #include "BitString.h"
 #include "Array.h"
-#include <stdexcept>
 
 // ==================== ТЕСТЫ КОНСТРУКТОРОВ 
 TEST(BitStringTest, DefaultConstructorCreatesEmptyString) {

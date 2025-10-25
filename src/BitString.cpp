@@ -1,8 +1,10 @@
 #include "BitString.h"
-#include "Array.h"
+
 #include <iostream>
 #include <stdexcept>
 #include <string>
+
+#include "Array.h"
 
 // Конструктор по умолчанию
 BitString::BitString() : bitArray() {}
@@ -47,8 +49,8 @@ BitString::BitString(BitString&& other) noexcept
 
 // AND операция
 BitString BitString::bitAnd(const BitString& other) {
-    size_t maxLength = std::max(this->bitArray.getSize(), other.bitArray.getSize());
-    BitString padded1 = this->addingZeroes(maxLength);
+    size_t maxLength = std::max(bitArray.getSize(), other.bitArray.getSize());
+    BitString padded1 = addingZeroes(maxLength);
     BitString padded2 = other.addingZeroes(maxLength);
     BitString result(maxLength, '0');
 
@@ -64,8 +66,8 @@ BitString BitString::bitAnd(const BitString& other) {
 
 // OR операция
 BitString BitString::bitOr(const BitString& other) {
-    size_t maxLength = std::max(this->bitArray.getSize(), other.bitArray.getSize());
-    BitString padded1 = this->addingZeroes(maxLength);
+    size_t maxLength = std::max(bitArray.getSize(), other.bitArray.getSize());
+    BitString padded1 = addingZeroes(maxLength);
     BitString padded2 = other.addingZeroes(maxLength);
     BitString result(maxLength, '0');
 
@@ -81,8 +83,8 @@ BitString BitString::bitOr(const BitString& other) {
 
 // XOR операция
 BitString BitString::bitXor(const BitString& other) {
-    size_t maxLength = std::max(this->bitArray.getSize(), other.bitArray.getSize());
-    BitString padded1 = this->addingZeroes(maxLength);
+    size_t maxLength = std::max(bitArray.getSize(), other.bitArray.getSize());
+    BitString padded1 = addingZeroes(maxLength);
     BitString padded2 = other.addingZeroes(maxLength);
     BitString result(maxLength, '0');
 
@@ -98,10 +100,10 @@ BitString BitString::bitXor(const BitString& other) {
 
 // NOT операция
 BitString BitString::bitNot() {
-    BitString result(this->bitArray.getSize(), '0');
+    BitString result(bitArray.getSize(), '0');
 
-    for (size_t i = 0; i < this->bitArray.getSize(); i++) {
-        if (this->bitArray.getData()[i] == '0') {
+    for (size_t i = 0; i < bitArray.getSize(); i++) {
+        if (bitArray.getData()[i] == '0') {
             result.bitArray.insertIndex(i, '1');
         } else {
             result.bitArray.insertIndex(i, '0');
@@ -114,8 +116,8 @@ BitString BitString::bitNot() {
 
 // вывод бит стр
 void BitString::print() const {
-    for (size_t i = 0; i < this->bitArray.getSize(); i++) {
-        std::cout << this->bitArray.getData()[i];
+    for (size_t i = 0; i < bitArray.getSize(); i++) {
+        std::cout << bitArray.getData()[i];
     }
     std::cout << std::endl;
 }
@@ -140,9 +142,9 @@ BitString BitString::addingZeroes(size_t length) const {
     }
     BitString result(length, '0'); 
 
-    size_t offset = length - this->bitArray.getSize();
-    for (size_t i = 0; i < this->bitArray.getSize(); i++) {
-        result.bitArray.insertIndex(offset + i, this->bitArray.getData()[i]);
+    size_t offset = length - bitArray.getSize();
+    for (size_t i = 0; i < bitArray.getSize(); i++) {
+        result.bitArray.insertIndex(offset + i, bitArray.getData()[i]);
     }
     return result;
 }

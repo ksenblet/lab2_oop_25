@@ -5,12 +5,12 @@ Array::Array() : size(0), data(nullptr) {}
 
 // Конструктор с заполнением
 Array::Array(const size_t& arraySize, unsigned char defaultValue) {
-    this->size = arraySize;
-    this->data = new unsigned char[arraySize];
+    size = arraySize;
+    data = new unsigned char[arraySize];
     
     // заполняем массив значением по умолчанию
     for (size_t i = 0; i < arraySize; ++i) {
-        this->data[i] = defaultValue;
+        data[i] = defaultValue;
     }
 }
 
@@ -60,31 +60,46 @@ Array::Array(Array&& other) noexcept {
     other.data = nullptr;
 }
 
-// ОПЕРАЦИИ: сложение (создает новый массив)
-Array Array::add(const Array& other) {
-    return Array(this->size + other.size, '1');
-}
-
-// вычитание (искл обрабатывается)
-Array Array::remove(const Array& other) {
-    if (size < other.size) {
-        throw std::logic_error("Array size cannot be negative");
-    }
-    
-    return Array(this->size - other.size, '0');
-}
-
-// Сравнение массивов по размеру
 bool Array::equals(const Array& other) const {
-    return size == other.size;
+    if (other.size != size) {
+        return false;
+    }
+    for (size_t i = 0; i < size; ++i) {
+        if (data[i] != other.data[i]) {
+            return false;
+        }
+    }
+    return true;
 }
 
 bool Array::moreThan(const Array& other) const {
-    return size > other.size;
+    if (other.size != size) {
+        return size > other.size;
+    }
+    for (size_t i = 0; i < size; ++i) {
+        if (data[i] < other.data[i]) {
+            return false;
+        } 
+        if (data[i] > other.data[i]) {
+            return true;
+        }
+    }
+    return false;
 }
 
 bool Array::lessThan(const Array& other) const {
-    return size < other.size;
+    if (other.size != size) {
+        return size < other.size;
+    }
+    for (size_t i = 0; i < size; ++i) {
+        if (data[i] > other.data[i]) {
+            return false;
+        } 
+        if (data[i] < other.data[i]) {
+            return true;
+        }
+    }
+    return false;
 }
 
 // установка значения по индексу (для BitString)
@@ -114,12 +129,33 @@ unsigned char* Array::getData() const {
     return data;
 }
 
+// СЕТТЕРЫ 
+void Array::setData(size_t newSize, unsigned char* newData) {
+    delete[] data;
+    size = newSize;
+    data = newData;
+}
+
+void Array::setSize(size_t newSize) {
+    if (newSize == size) {
+        return;
+    }
+    unsigned char* newData = new unsigned char[newSize];
+    size_t copySize = (newSize < size) ? newSize : size;
+    for (size_t i = 0; i < copySize; ++i) {
+        newData[i] = data[i];
+    }
+    for (size_t i = copySize; i < newSize; ++i) {
+        newData[i] = '0';
+    }
+    delete[] data;
+    data = newData;
+    size = newSize;
+}
+
 // деструктор 
 Array::~Array() noexcept {
-    // jсвобождаем память, если выделена
-    if (data != nullptr) {
-        delete[] data;
-        data = nullptr;
-    }
+    delete[] data;
+    data = nullptr;
     size = 0;
 }

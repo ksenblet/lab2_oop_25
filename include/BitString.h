@@ -1,6 +1,8 @@
 #pragma once
+
 #include <iostream>
-#include "Array.h"  
+
+#include "Array.h" 
 
 class BitString {
 public:
@@ -9,7 +11,6 @@ public:
     BitString(const size_t& arraySize, unsigned char defaultValue = '0');
     BitString(const std::initializer_list<unsigned char>& initialValues);   
     BitString(const std::string& sourceString);
-
     BitString(const BitString& other); 
     BitString(BitString&& other) noexcept;
 

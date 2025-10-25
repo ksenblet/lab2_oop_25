@@ -1,6 +1,7 @@
 #include <iostream>
-#include "BitString.h"
 #include <string>
+
+#include "BitString.h"
 
 int main(){
     std::cout << "=== Lab 2: class BitString ===" << std::endl;
